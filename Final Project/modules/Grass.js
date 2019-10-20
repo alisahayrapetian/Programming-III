@@ -25,7 +25,7 @@ module.exports = class Grass extends LiveForm {
     chooseCell(character) {
         this.getNewCoordinates();
         return super.chooseCell(character);
-    }
+    } 
 
 
     mul() {
