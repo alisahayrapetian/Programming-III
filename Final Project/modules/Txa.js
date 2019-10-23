@@ -75,6 +75,12 @@ module.exports = class Txa extends LiveForm {
                 }
             }
 
+            for (let i in hreshArr) {
+                if (hreshArr[i].x == x && hreshArr[i].y == y) {
+                    hreshArr.splice(i, 1)
+                }
+            }
+
             this.x = x;
             this.y = y;
 

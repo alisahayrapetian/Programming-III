@@ -5,6 +5,7 @@ var Gishatich = require("./modules/Gishatich.js");
 var Txa = require("./modules/Txa.js");
 var Axjik = require("./modules/Axjik.js");
 let random = require('./modules/random');
+var Hresh = require("./modules/Hresh.js");
 //! Requiring modules  --  END
 
 //! Initializing global arrays  --  START
@@ -14,6 +15,7 @@ gishatichArr = [];
 txaArr = [];
 axjikArr = [];
 matrix = [];
+hreshArr = [];
 //! Initializing global arrays  --  END
 
 // statistics start
@@ -22,12 +24,13 @@ grassEaterHashiv = 0;
 gishatichHashiv = 0;
 txaHashiv = 0;
 axjikHashiv = 0;
+hreshHashiv = 0;
 // statistics end
 
 // time = 0
 //! Creating MATRIX -- START
 
-function matrixGenerator(matrixSize, grass, grassEater, gishatich, txa, axjik) {
+function matrixGenerator(matrixSize, grass, grassEater, gishatich, txa, axjik, hresh) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -42,7 +45,7 @@ function matrixGenerator(matrixSize, grass, grassEater, gishatich, txa, axjik) {
     for (let i = 0; i < grassEater; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
-        matrix[customY][customX] = 2;
+        matrix[customY][customX] = 2;         
     }
     for (let i = 0; i < gishatich; i++) {
         let customX = Math.floor(random(matrixSize));
@@ -59,8 +62,13 @@ function matrixGenerator(matrixSize, grass, grassEater, gishatich, txa, axjik) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
+    for (let i = 0; i < hresh; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
 }
-matrixGenerator(30, 20, 40, 15, 1, 30);
+matrixGenerator(30, 20, 10, 10, 5, 10,5);
 //! Creating MATRIX -- END
 
 //! SERVER STUFF  --  START
@@ -101,6 +109,11 @@ function creatingObjects() {
                 var axjik = new Axjik(x, y);
                 axjikArr.push(axjik);
                 axjikHashiv++
+            }
+            else if (matrix[y][x] == 6) {
+                var hresh = new Hresh(x, y);
+                hreshArr.push(hresh);
+                hreshHashiv++
             }
         }
     }
@@ -148,6 +161,11 @@ function game() {
             axjikArr[i].mulaxjik();
         }
     }
+    if (hreshArr[0] !== undefined) {
+        for (var i in hreshArr) {
+            hreshArr[i].mulhresh();
+        }
+    }    
 
     //! Object to send
     let sendData = {
